@@ -59,13 +59,13 @@ final class ViewController: UIViewController {
     
     // MARK: - Private Methods
     private func fetchAddressData(ipAddress: String) {
-        guard let url = URL(string: "http://ip-api.com/json/\(ipAddress)?fields=country,countryCode,regionName,city,zip,timezone,org,query,lat,lon") else {  self.resultTextView.text = "Error"; return }
+        guard let url = URL(string: "http://ip-api.com/json/\(ipAddress)?fields=country,countryCode,regionName,city,zip,timezone,org,query,lat,lon") else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
         URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data, error == nil else { self.resultTextView.text = "Error"; return }
-            guard let addressData = try? JSONDecoder().decode(Address.self, from: data) else { self.resultTextView.text = "Error"; return }
+            guard let data, error == nil else { return }
+            guard let addressData = try? JSONDecoder().decode(Address.self, from: data) else { return }
             DispatchQueue.main.async {
                 self.mapView.removeAnnotations(self.mapView.annotations)
                 self.resultTextView.text = "Country: \(addressData.country)\nRegion: \(addressData.regionName)\nCity: \(addressData.city)\nPostal code: \(addressData.zip)\nTimezone: \(addressData.timezone)\nOrganization: \(addressData.org)"
@@ -78,12 +78,12 @@ final class ViewController: UIViewController {
     }
     
     private func fetchSelfAddress() {
-        guard let url = URL(string: "http://ip-api.com/json/?fields=country,countryCode,regionName,city,zip,timezone,org,query,lat,lon") else { self.selfAddressLabel.text = "Error"; return }
+        guard let url = URL(string: "http://ip-api.com/json/?fields=country,countryCode,regionName,city,zip,timezone,org,query,lat,lon") else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data, error == nil else { self.selfAddressLabel.text = "Error"; return }
-            guard let addressData = try? JSONDecoder().decode(Address.self, from: data) else { self.selfAddressLabel.text = "Error"; return }
+            guard let data, error == nil else { return }
+            guard let addressData = try? JSONDecoder().decode(Address.self, from: data) else { return }
             DispatchQueue.main.async {
                 self.selfAddress = addressData.query
                 self.selfAddressLabel.text = self.selfAddressHidden
