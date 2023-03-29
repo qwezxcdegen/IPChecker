@@ -7,32 +7,51 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
 
-    @IBOutlet weak var addressTextField: UITextField!
+    @IBOutlet weak private var addressTextField: UITextField!
     
-    @IBOutlet weak var resultTextView: UITextView!
+    @IBOutlet weak private var resultTextView: UITextView!
     
-    @IBOutlet weak var selfAddressLabel: UILabel!
+    @IBOutlet weak private var selfAddressLabel: UILabel!
+    
+    private var selfAddress = ""
+    
+    private var isAddressHidden = true
+    
+    private var selfAddressHidden: String {
+        var hiddenAddress = ""
+        for char in selfAddress {
+            if char == "." {
+                hiddenAddress += "."
+            } else {
+                hiddenAddress += "*"
+            }
+        }
+        return hiddenAddress
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchSelfAddress()
     }
 
-
-    @IBAction func checkButtonPressed(_ sender: UIButton) {
+    @IBAction private func checkButtonPressed(_ sender: UIButton) {
         guard let address = addressTextField.text else { return }
         resultTextView.text = "Loading..."
         fetchAddressData(ipAddress: address)
     }
     
-    @IBAction func copyButtonPressed(_ sender: UIButton) {
-        UIPasteboard.general.string = selfAddressLabel.text
+    @IBAction private func copyButtonPressed(_ sender: UIButton) {
+        UIPasteboard.general.string = selfAddress
         present(UIAlertController(title: "Copied", message: nil, preferredStyle: .alert), animated: true)
         dismiss(animated: true)
     }
     
+    @IBAction private func showIPPressed(_ sender: UIButton) {
+        selfAddressLabel.text = isAddressHidden ? selfAddress : selfAddressHidden
+        isAddressHidden.toggle()
+    }
     
     private func fetchAddressData(ipAddress: String) {
         guard let url = URL(string: "http://ip-api.com/json/\(ipAddress)?fields=country,countryCode,regionName,city,zip,timezone,org,query") else {  self.resultTextView.text = "Error"; return }
@@ -56,7 +75,8 @@ class ViewController: UIViewController {
             guard let data, error == nil else { self.selfAddressLabel.text = "Error"; return }
             guard let addressData = try? JSONDecoder().decode(Address.self, from: data) else { self.selfAddressLabel.text = "Error"; return }
             DispatchQueue.main.async {
-                self.selfAddressLabel.text = addressData.query
+                self.selfAddress = addressData.query
+                self.selfAddressLabel.text = self.selfAddressHidden
             }
         }.resume()
     }
