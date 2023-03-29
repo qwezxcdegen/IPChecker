@@ -41,6 +41,7 @@ final class ViewController: UIViewController {
     // MARK: - Private IBActions
     @IBAction private func checkButtonPressed(_ sender: UIButton) {
         guard let address = addressTextField.text else { return }
+        view.endEditing(true)
         resultTextView.text = "Loading..."
         fetchAddressData(ipAddress: address)
     }
