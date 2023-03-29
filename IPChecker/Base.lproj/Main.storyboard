@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Map view configurations" minToolsVersion="14.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -38,8 +39,11 @@
                                 </subviews>
                             </stackView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="knZ-Ye-fut">
-                                <rect key="frame" x="0.0" y="183.66666666666669" width="393" height="634.33333333333326"/>
+                                <rect key="frame" x="0.0" y="183.66666666666666" width="393" height="302.33333333333337"/>
                                 <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="knZ-Ye-fut" secondAttribute="height" multiplier="1.3" id="YvV-yi-dew"/>
+                                </constraints>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -87,17 +91,24 @@
                                     <constraint firstItem="TOw-jh-Q5y" firstAttribute="width" secondItem="sXK-Wl-1MY" secondAttribute="width" id="v0r-Vs-kv5"/>
                                 </constraints>
                             </stackView>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ric-Sq-NoL">
+                                <rect key="frame" x="0.0" y="486" width="393" height="332"/>
+                                <standardMapConfiguration key="preferredConfiguration"/>
+                            </mapView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="knZ-Ye-fut" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="4Hb-e3-6Qm"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Ric-Sq-NoL" secondAttribute="bottom" id="5b8-W4-IpU"/>
+                            <constraint firstItem="Ric-Sq-NoL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Dei-kc-jFH"/>
                             <constraint firstItem="TZJ-4O-ApJ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="EVR-tQ-fjA"/>
                             <constraint firstItem="AhP-KW-v7H" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="Hbq-ri-H5Z"/>
-                            <constraint firstItem="knZ-Ye-fut" firstAttribute="top" secondItem="AhP-KW-v7H" secondAttribute="bottom" constant="16" id="KvK-O5-fOD"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TZJ-4O-ApJ" secondAttribute="trailing" constant="16" id="NFV-GF-2iW"/>
+                            <constraint firstItem="Ric-Sq-NoL" firstAttribute="top" secondItem="knZ-Ye-fut" secondAttribute="bottom" id="U2Z-eo-HKk"/>
                             <constraint firstItem="AhP-KW-v7H" firstAttribute="top" secondItem="TZJ-4O-ApJ" secondAttribute="bottom" constant="20" id="WOX-zl-RtD"/>
+                            <constraint firstItem="knZ-Ye-fut" firstAttribute="top" secondItem="AhP-KW-v7H" secondAttribute="bottom" constant="16" id="XaX-Nf-paY"/>
                             <constraint firstItem="knZ-Ye-fut" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="YG0-8F-Tlb"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ric-Sq-NoL" secondAttribute="trailing" id="ZIj-tD-aSC"/>
                             <constraint firstItem="TZJ-4O-ApJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="j2y-mG-QVf"/>
                             <constraint firstItem="knZ-Ye-fut" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ma6-Lg-Ib0"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="AhP-KW-v7H" secondAttribute="trailing" constant="16" id="yEZ-oY-RgO"/>
@@ -105,6 +116,7 @@
                     </view>
                     <connections>
                         <outlet property="addressTextField" destination="NKz-ah-hTe" id="Eb0-o0-OHo"/>
+                        <outlet property="mapView" destination="Ric-Sq-NoL" id="GHB-gm-SZU"/>
                         <outlet property="resultTextView" destination="knZ-Ye-fut" id="ZZ9-DR-ghV"/>
                         <outlet property="selfAddressLabel" destination="XMk-cH-1Jk" id="ogs-pa-R0I"/>
                     </connections>
