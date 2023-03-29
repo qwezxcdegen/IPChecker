@@ -9,13 +9,15 @@ import UIKit
 import MapKit
 
 final class ViewController: UIViewController {
+    
+    // MARK: - Private IBOutlets
     @IBOutlet weak private var addressTextField: UITextField!
     @IBOutlet weak private var resultTextView: UITextView!
     @IBOutlet weak private var selfAddressLabel: UILabel!
     @IBOutlet weak private var mapView: MKMapView!
     
+    // MARK: - Private properties
     private var selfAddress = ""
-    
     private var isAddressHidden = true
     
     private var selfAddressHidden: String {
@@ -30,11 +32,13 @@ final class ViewController: UIViewController {
         return hiddenAddress
     }
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchSelfAddress()
     }
 
+    // MARK: - Private IBActions
     @IBAction private func checkButtonPressed(_ sender: UIButton) {
         guard let address = addressTextField.text else { return }
         resultTextView.text = "Loading..."
@@ -52,6 +56,7 @@ final class ViewController: UIViewController {
         isAddressHidden.toggle()
     }
     
+    // MARK: - Private Methods
     private func fetchAddressData(ipAddress: String) {
         guard let url = URL(string: "http://ip-api.com/json/\(ipAddress)?fields=country,countryCode,regionName,city,zip,timezone,org,query,lat,lon") else {  self.resultTextView.text = "Error"; return }
         var request = URLRequest(url: url)
