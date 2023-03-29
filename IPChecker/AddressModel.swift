@@ -11,4 +11,5 @@ import Foundation
 struct Address: Codable {
     let country, countryCode, regionName: String
     let city, zip, timezone, org, query: String
+    let lat, lon: Double
 }
